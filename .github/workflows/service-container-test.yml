@@ -1,0 +1,41 @@
+name: Testing PostgreSQL service-container
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  container-job:
+    runs-on: ubuntu-latest
+
+    container: node:10.18-jessie
+
+    services:
+      postgres-test-service:
+        image: postgres
+
+        env:
+          POSTGRES_PASSWORD: Tiadavino3
+
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    steps:
+      - name: Download repository code
+        uses: actions/checkout@v4
+
+      - name: Install All dependencies
+        run: npm ci
+
+      - name: Connect to PostgreSQL
+
+        run: node client.js
+
+        env:
+          POSTGRES_HOST: postgres-test-service
+
+          POSTGRES_PORT: 5432
