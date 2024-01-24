@@ -20,9 +20,9 @@ jobs:
 
         options: >-
           --health-cmd pg_isready
-          --health-interval 1m
-          --health-timeout 1.5m
-          --health-retries 1.5m
+          --health-interval 45s
+          --health-timeout 30s
+          --health-retries 30s
 
     steps:
       - name: Download repository code
