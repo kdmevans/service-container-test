@@ -41,7 +41,7 @@ jobs:
 
       - name: Create PostgreSQL database
         run: |
-          PGPASSWORD=$POSTGRES_PASSWORD psql -h postgres-test-service -U postgres -d postgres -c "CREATE DATABASE mytest"
+          echo $POSTGRES_PASSWORD | PGPASSWORD=$POSTGRES_PASSWORD psql -h postgres-test-service -U postgres -d postgres -c "CREATE DATABASE mytest" -W
 
       - name: Install All dependencies
         run: npm ci
