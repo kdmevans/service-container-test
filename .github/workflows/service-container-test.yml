@@ -41,7 +41,7 @@ jobs:
 
       - name: Create PostgreSQL database
         run: |
-          psql -h postgres-test-service -U postgres -c 'CREATE DATABASE mytest'
+          psql -h postgres-test-service -U postgres -d postgres -c "CREATE DATABASE mytest" -W
 
       - name: Install All dependencies
         run: npm ci
