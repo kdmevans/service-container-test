@@ -20,9 +20,9 @@ jobs:
 
         options: >-
           --health-cmd pg_isready
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
+          --health-interval 1m
+          --health-timeout 1.5m
+          --health-retries 1.5m
 
     steps:
       - name: Download repository code
@@ -37,11 +37,11 @@ jobs:
           rm dockerize-linux-amd64-v0.6.1.tar.gz
 
       - name: Wait for PostgreSQL to be ready
-        run: dockerize -wait tcp://postgres-test-service:5432 -timeout 1m
+        run: dockerize -wait tcp://postgres-test-service:5432 -timeout 2m
 
       - name: Create PostgreSQL database
         run: |
-          echo $POSTGRES_PASSWORD | PGPASSWORD=$POSTGRES_PASSWORD psql -h postgres-test-service -U postgres -d postgres -c "CREATE DATABASE mytest" -W
+          PGPASSWORD=Tiadavino3 psql -h postgres-test-service -U postgres -d postgres -c "CREATE DATABASE mytest"
 
       - name: Install All dependencies
         run: npm ci
