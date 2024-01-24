@@ -28,6 +28,13 @@ jobs:
       - name: Download repository code
         uses: actions/checkout@v4
 
+      - name: Wait for PostgreSQL to be ready
+        run: dockerize -wait tcp://postgres-test-service:5432 -timeout 1m
+
+      - name: Create PostgreSQL database
+        run: |
+          psql -h postgres-test-service -U postgres -c 'CREATE DATABASE mytest'
+
       - name: Install All dependencies
         run: npm ci
 
